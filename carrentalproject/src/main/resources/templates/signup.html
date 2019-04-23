@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body, html {
+            height: 100%;
+
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .bg-img {
+            /* The image used */
+            background-image: url('../assets/img/home-bg.jpg');
+
+            min-height: 850px;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Add styles to the form container */
+        .container {
+            position: absolute;
+            right : 0;
+            margin: 20px;
+            max-width: 500px;
+            padding: 16px;
+            background-color: rgba(247,251,246,0.35);
+        }
+
+        /* Full-width input fields */
+        input[type=text], input[type=password], input[type=email], input[type=date] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+        }
+
+        input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        input[type=email]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+
+
+        /* Set a style for the submit button */
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+        .btn:hover {
+            opacity: 1;
+        }
+        a{
+
+            color: gold;
+        }
+        a:hover{
+            color: yellowgreen;
+        }
+
+        p{
+            color:floralwhite ;
+
+        }
+
+        h1{
+
+            font-size: 45px;
+            color: Black;
+            font-style: italic;
+            font-family: "Copperplate Gothic Bold";
+        }
+
+        .btn:hover {
+            background-color: rgba(213,15,27,0.67);
+            color:black; }
+
+    </style>
+</head>
+<body>
+
+
+<div class="bg-img">
+    <br/>
+    <h1>&nbsp;&nbsp;&nbsp;<img th:width="100px" th:height="40px" th:src="@{/assets/img/logo.png}" alt="..."/> Jahan Car Rental</h1>
+
+    <form th:object="${user}" th:action="@{/sign-up}" method="post" class="container">
+        <h2>Sign Up</h2>
+
+        <!--<label for="email"><b>Email</b></label>-->
+        <label ><b>First Name</b></label>
+        <input type="text"  th:field="*{firstName}" placeholder="Enter First Name" required="true">
+
+        <!--<label for="psw"><b>Password</b></label>-->
+        <label ><b>Last Name</b></label>
+        <input type="text"  th:field="*{lastName}" placeholder="Enter Last Name" required="true">
+
+        <!--<label for="email"><b>Email</b></label>-->
+        <label ><b>Email</b></label>
+        <input type="email"  th:field="*{email}" placeholder="Enter Email" required="true">
+
+        <!--<label for="psw"><b>Password</b></label>-->
+        <label ><b>Date of Birth</b></label>
+        <input type="date" th:text="${#dates.format(user.birthDate, 'yyyy-MM-dd')}" th:field="*{birthDate}"  class="fa-calendar" placeholder="Enter Birth Date">
+
+        <!--<div class="">-->
+            <!--<ul>-->
+                <!--<li>-->
+        <label ><b>Gender</b></label>
+        <br/><br/>
+                    <input type="radio" id="m" name="gender" value="male" th:field="*{gender}">
+                    <label for="m"><span></span><b>Male</b></label>
+        &nbsp;&nbsp;
+                <!--</li>-->
+                <!--<li>-->
+                    <input type="radio" id="f" name="gender" value="female" th:field="*{gender}">
+                    <label for="f"><span></span><b>Female</b></label>
+        &nbsp;&nbsp;
+                <!--</li>-->
+                <!--<li>-->
+                    <input type="radio" id="o" name="gender" value="other" th:field="*{gender}">
+                    <label for="o"><span></span><b>Other</b></label>
+        &nbsp;&nbsp;
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+<br/><br/>
+        <!--<button type="submit" value="Login" class="btn">Sign In</button>-->
+        <b><input type="submit" name="Sign Up" value="Sign up" class="btn"></b>
+
+        <p>
+            <b>Already have an account ?
+                <br/>
+                <a th:href="@{/login}">Go Back For Login</a>
+                <br/>
+                <!--<a href="index.html">Go Back to Home</a>-->
+               </b>
+        </p>
+        <span th:class="succes" th:text="${successMsg}"></span>
+        <span th:class="err" th:text="${rejectMsg}"></span>
+
+    </form>
+
+</div>
+
+</body>
+</html>

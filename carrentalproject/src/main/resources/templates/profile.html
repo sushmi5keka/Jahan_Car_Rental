@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>user profile</title>
+</head>
+<body>
+
+<div layout:fragment="custom-content">
+    <br/>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- edit form column -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="header">
+                        <h3 class="title"><i class="pe-7s-user"> Profile Summary Of <b><span th:text="${user.firstName} +' '+ ${user.lastName}"></span></b></i>
+                        </h3>
+                        <hr/>
+                    </div>
+
+                    <!--<div class="col-lg-8 push-lg-4 personal-info">-->
+                    <div class="content">
+                        <form role="form" th:object="${user}" th:action="@{/profile/} + ${id}" th:method="POST">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Roles</label>
+                                <div class="col-lg-9">
+                               <span th:each="r : ${user.roles}" multiple>
+                           <span th:text="${r.roleName}"></span>
+                       </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">First Name</label>
+                                <div class="col-lg-9">
+                                    <span th:text="*{firstName}"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Last Name</label>
+                                <div class="col-lg-9">
+                                    <span th:text="*{lastName}"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">User Name</label>
+                                <div class="col-lg-9">
+                                    <span th:text="*{userName}"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                                <div class="col-lg-9">
+                                    <span th:text="*{email}"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Gender</label>
+                                <div class="col-lg-9">
+                                    <span th:text="*{gender}"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Birth Date</label>
+                                <div class="col-lg-9">
+                                    <span th:text="*{birthDate}"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Regi Date</label>
+                                <div class="col-lg-9">
+                                    <span th:text="*{regiDate}"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Last Update</label>
+                                <div class="col-lg-9">
+                                    <span th:text="*{lastModifiedDate}"></span>
+                                </div>
+                            </div>
+
+
+                            <!--<div class="form-group row">-->
+                            <!--<label class="col-lg-3 col-form-label form-control-label">RegiDate</label>-->
+                            <!--<div class="col-lg-3">-->
+                            <!--<span th:text="*{regiDate}"></span>-->
+                            <!--</div>-->
+                            <!--<label class="col-lg-2 col-form-label form-control-label">lastModifiedDate</label>-->
+                            <!--<div class="col-lg-4">-->
+                            <!--<span th:text="*{lastModifiedDate}"></span>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label">Status</label>
+                                <div class="col-lg-9">
+                                    <span th:text="*{enabled}"></span>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-user">
+                    <div class="image">
+                        <img th:src="@{/assets/img/speed.jpg}"
+                             alt="..."/>
+
+                    </div>
+                    <div class="content">
+                        <div class="author">
+
+                            <img th:src="@{${user.filePath}}" class="avatar border-gray" alt="..."
+                                 th:alt="${user.fileName}"/>
+                            <br>
+                            <h4 class="title">Photo Of <span th:text="${user.firstName}+' '+${user.lastName}"></span></h4>
+                            <br/>
+                            <p><span th:text="${user.email}"></span></p>
+                            <p><span th:text="${user.mobile}"></span></p>
+                            <p><span th:text="${user.address}"></span></p>
+                        </div>
+
+
+                    </div>
+
+                    <hr/>
+                    <div class="text-center">
+                        <p class="description text-center"><b style="color: rgba(212,36,15,0.82); font-size: 20px"> Jahan Car Rental </b><br>
+                            " Enjoy The Ride... " <br>
+
+                        </p>
+
+                    </div>
+                </div>
+             </div>
+         </div>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

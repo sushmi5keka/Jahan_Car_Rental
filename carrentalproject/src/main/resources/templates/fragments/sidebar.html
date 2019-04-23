@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>sidebar</title>
+
+</head>
+<body>
+<div class="sidebar" data-color="black" data-image="/assets/img/sidebar-7.jpg" th:fragment="sidebar">
+
+    <!--
+
+        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+        Tip 2: you can also add an image using data-image tag
+
+    -->
+
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a href="/" class="simple-text">
+                <!--<i class="pe-7s-menu"></i>-->
+                <!--Manu-->
+                <img th:width="100px" th:height="40px" th:src="@{/assets/img/logo.png}" alt="..."/>
+            </a>
+        </div>
+
+
+
+        <ul class="nav">
+            <!--<li class="active">-->
+            <li class="dropdown">
+                <a href="/">
+                    <i class="pe-7s-graph"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="/abouts">
+                    <i class="pe-7s-notebook"></i>
+                    <p>About Us</p>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="/contacts">
+                    <i class="pe-7s-phone"></i>
+                    <p>Contact Us</p>
+                </a>
+            </li>
+
+            <!--<li class="dropdown">-->
+                <!--<a href="/carsphoto">-->
+                    <!--<i class="pe-7s-photo"></i>-->
+                    <!--<p>Our Cars</p>-->
+                <!--</a>-->
+            <!--</li>-->
+
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="pe-7s-door-lock"></i>
+                    <p>Booking</p>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a style="color: black!important;" href="/car/cars">Select Car for Booking</a></li>
+                    <li><a style="color: black!important;" href="/booking/list">Booking Detail</a></li>
+                    <li><a style="color: black!important;" href="/booking/summary">Booking Summary</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="/map">
+                    <i class="pe-7s-map-marker"></i>
+                    <p>Map</p>
+                </a>
+            </li>
+
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="pe-7s-users"></i>
+                    <p>Role</p>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a style="color: black!important;" href="/role/add">Add role</a></li>
+                    <li><a style="color: black!important;" href="/role/list">Role list</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="dropdown ">
+                <a  href="" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="pe-7s-user"></i>
+                    <p>User Profile</p>
+
+                    </a>
+                <ul class="dropdown-menu shusmo-dropdown" >
+                    <li><a style="color: black!important;" th:href="@{/user/add}">Add user</a></li>
+                    <!--<li><a style="color: black!important;" th:href="@{/user/edit}">Edit user</a></li>-->
+                    <li><a style="color: black!important;" th:href="@{/user/list}">User list</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="pe-7s-network"></i>
+                    <p>Category</p>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a style="color: black!important;" href="/category/add">Add Category</a></li>
+                    <li><a style="color: black!important;" href="/category/list">Categoty list</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="pe-7s-car"></i>
+                    <p>Car</p>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a style="color: black!important;" href="/car/add">Add Car</a></li>
+                    <li><a style="color: black!important;" href="/car/list">Car Detail</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="pe-7s-home"></i>
+                    <p>Address</p>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a style="color: black!important;" href="/address/add">Address From</a></li>
+                    <li><a style="color: black!important;" href="/address/list">Address list</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="pe-7s-culture"></i>
+                    <p>Branch</p>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a style="color: black!important;" href="/agency/add">New Branch From</a></li>
+                    <li><a style="color: black!important;" href="/agency/list">Branch list</a></li>
+                </ul>
+            </li>
+
+
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="pe-7s-news-paper"></i>
+                    <p>Report</p>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a style="color: black!important;" href="/car/report">Car Report</a></li>
+                    <li><a style="color: black!important;" href="/booking/summaryreport">Summary Report</a></li>
+                </ul>
+            </li>
+            <!--<li class="active-pro">-->
+            <!--<li class="active-pro">-->
+                <!--<a href="/car/report">-->
+                    <!--<i class="pe-7s-rocket"></i>-->
+                    <!--<p>Car Report</p>-->
+                <!--</a>-->
+            <!--</li>-->
+
+            <!--<li class="active-pro">-->
+                <!--<a href="/booking/summaryreport">-->
+                    <!--<i class="pe-7s-rocket"></i>-->
+                    <!--<p>Summary Report</p>-->
+                <!--</a>-->
+            <!--</li>-->
+
+            <li class="active-pro">
+                <a href="/car/pdf">
+                    <i class="pe-7s-download"></i>
+                    <p>DL Car Report</p>
+                </a>
+            </li>
+            <li class="active-pro">
+                <a href="/booking/pdf">
+                    <i class="pe-7s-download"></i>
+                    <p>DL Summary Report</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

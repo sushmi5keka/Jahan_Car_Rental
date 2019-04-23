@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Booking</title>
+
+    <script>
+        function callToatl() {
+            document.getElementById("totalFareAmount").value = document.getElementById("noOfDay").value * document.getElementById("perDayFare").value;
+            document.getElementById("dueFare").value = document.getElementById("totalFareAmount").value - document.getElementById("advanceFare").value;
+            // document.getElementById("noOfDay").value = document.getElementById("bookingDate").value * document.getElementById("returnDate").value;
+        }
+    </script>
+</head>
+<body>
+<div layout:fragment="custom-content">
+    <br/><br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card min-height-box">
+                        <div class="header">
+                            <h4 class="title">Update Booking</h4>
+                        </div>
+                        <div class="content">
+                            <form th:object="${booking}" th:action="@{/booking/edit/}+${id}" method="post">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>Car</b></label>
+                                            <div >
+                                                <img class="img-responsive"  th:src="${carno?.filePath}"
+                                                     th:value="${carno?.filePath}" alt="" th:width="211" th:height="120">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-md-4">-->
+                                        <!--<div class="form-group">-->
+                                            <!--<label><b>Car</b></label>-->
+                                            <!--<div >-->
+                                                <!--<select th:field="*{car}" class="form-control" multiple>-->
+
+                                                    <!--<option th:each="car : ${carlist}" th:value="${car.id}"><span th:text="${car.carModel}"></span></option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>Customer Name</b></label>
+                                            <input type="text"  th:field="*{customerName}" class="form-control" placeholder="Enter First Name" required="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <!--<label for="exampleInputEmail1">Email address</label>-->
+                                            <label ><b>Customer mobile</b></label>
+                                            <input type="text"  th:field="*{customerMobile}"class="form-control"  placeholder="Enter Last Name" required="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><b>Customer Email</b></label>
+                                            <input type="email" th:field="*{customerEmail}" class="form-control"
+                                                   placeholder="Enter Email" required="true">
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-md-4">-->
+                                    <!--<div class="form-group">-->
+                                    <!--<label ><b>Mobile Number</b></label>-->
+                                    <!--<input type="text"  th:field="*{mobile}" class="form-control"  placeholder="Enter Mobile number" required="true">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><b>Date of Booking</b></label>
+                                            <input type="date" id="bookingDate"
+                                                   th:text="${#dates.format(booking.bookingdate, 'yyyy-MM-dd')}"
+                                                   th:field="*{bookingdate}" class="fa-calendar form-control"
+                                                   placeholder="Enter Birth Date">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><b>Return Date</b></label>
+                                            <input type="date" id="returnDate"
+                                                   th:text="${#dates.format(booking.returnDate, 'yyyy-MM-dd')}"
+                                                   th:field="*{returnDate}" class="fa-calendar form-control"
+                                                   placeholder="Enter Birth Date">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><b>No. Of Days</b></label>
+                                            <input id="noOfDay" type="text" th:field="*{noOfDays}" class="form-control"
+                                                   placeholder="Enter Email" oninput="callToatl()" required="true">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><b>Per Day Fare</b></label>
+                                            <input id="perDayFare" type="text" th:value="${carno.getFarePerDay()}"
+                                                   class="fa-calendar form-control" oninput="callToatl()" placeholder="Enter fare per day">
+                                            <!--th:value="${carno.farePerDay}"-->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><b>Total Fare Amount</b></label>
+                                            <input id="totalFareAmount" type="text" th:field="*{totalFareAmount}" class="form-control"
+                                                   oninput="callToatl()" placeholder="Enter Email"  required="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><b>Advancr Fare Amount</b></label>
+                                            <input id="advanceFare" type="text" th:field="*{advanceFareAmount}" oninput="callToatl()"
+                                                   class="fa-calendar form-control" placeholder="Enter Birth Date">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><b>Due Fare Amount</b></label>
+                                            <input id="dueFare" type="text" th:field="*{dueFareAmount}" class="form-control"
+                                                   placeholder="Enter Email" required="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
+
+                                <span th:class="succes" th:text="${successMsg}"></span>
+                                <span th:class="err" th:text="${rejectMsg}"></span>
+
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-user">
+
+                        <div class="giff">
+                            <img th:src="@{/assets/img/faces/car.gif}" alt="..." height="700px" width="390px"/>
+
+                        </div>
+
+                        <hr>
+
+                        <!--<div class="gif">-->
+                            <!--<img th:src="@{/assets/img/faces/pure.gif}" alt="..."/>-->
+
+                        <!--</div>-->
+
+                        <!--<hr>-->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+            <!--inner block end here-->
+</body>
+</html>
