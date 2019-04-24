@@ -31,9 +31,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/booking/")
@@ -87,6 +85,9 @@ public class BookingController {
             booking.setFileName(car1.getFileName());
             booking.setFileSize(car1.getFileSize());
             booking.setFileExtension(car1.getFileExtension());
+            Set<Car> cars=new HashSet<>();
+            cars.add(car1);
+            booking.setCar(cars);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             booking.setCustomer(userRepo.findByUserName(authentication.getName()));

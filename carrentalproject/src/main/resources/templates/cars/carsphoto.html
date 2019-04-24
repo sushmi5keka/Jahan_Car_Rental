@@ -41,6 +41,25 @@
 
 
             <div class="clearfix"> </div>
+            <h1>Already Booked Car List</h1>
+            <div class="col-md-3 product-grid" th:each="car : ${alreadyBookedcars}">
+                <div class="product-items">
+                    <div class="project-eff">
+                        <img class="img-responsive" th:src="${car.filePath}" alt="" th:width="283" th:height="120" >
+                    </div>
+
+                    <div class="produ-cost">
+                        <hr/>
+                        <h4 th:text="${car?.category?.name}"></h4>
+                        <h5 th:text="'Model : ' + ${car.carModel}"></h5>
+                        <h5 th:text="${car.farePerDay} +' '+ 'Per Day'"></h5>
+                        <input type="checkbox" th:text="' '+ 'Booked'">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="clearfix"> </div>
         </div>
     </div>
     <!--inner block end here-->

@@ -1,9 +1,7 @@
 package com.israt.carrentalproject.Controller;
 
 
-import com.israt.carrentalproject.Entity.Agency;
-import com.israt.carrentalproject.Entity.Car;
-import com.israt.carrentalproject.Entity.Role;
+import com.israt.carrentalproject.Entity.*;
 import com.israt.carrentalproject.Jasper.MediaUtils;
 import com.israt.carrentalproject.Jasper.TaskService;
 import com.israt.carrentalproject.Repo.AgencyRepo;
@@ -29,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,9 +35,11 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/car/")
@@ -62,6 +63,9 @@ public class CarController {
     @Autowired
     ServletContext context;
 
+    @Autowired
+    private BookingRepo bookingRepo;
+
     private static String UPLOADED_FOLDER = "src/main/resources/static/ourcars/";
 
 //    @Autowired
@@ -77,7 +81,7 @@ public class CarController {
 
 
     @PostMapping(value = "add")
-    public String add(@Valid Car car, BindingResult result, Model model,@RequestParam("file") MultipartFile file) {
+    public String add(@Valid Car car, BindingResult result, Model model, @RequestParam("file") MultipartFile file) {
         if (result.hasErrors()) {
             model.addAttribute("rejectMsg", "Somthing is wrong");
             model.addAttribute("categorylist", categoryRepo.findAll());
@@ -96,13 +100,13 @@ public class CarController {
                 car.setFilePath("/ourcars/" + "new-" + file.getOriginalFilename());
                 car.setFileExtension(file.getContentType());
                 //////////////////////For Image Upload end/////////////////////
-            this.carRepo.save(car);
-            model.addAttribute("car", new Car());
-            model.addAttribute("successMsg", "Successfully Saved!");
+                this.carRepo.save(car);
+                model.addAttribute("car", new Car());
+                model.addAttribute("successMsg", "Successfully Saved!");
 
-            model.addAttribute("categorylist", categoryRepo.findAll());
+                model.addAttribute("categorylist", categoryRepo.findAll());
 
-            model.addAttribute("agencylist", agencyRepo.findAll());
+                model.addAttribute("agencylist", agencyRepo.findAll());
                 imageOptimizer.optimizeImage(UPLOADED_FOLDER, file, 1.0f, 211, 150);
 //                imageOptimizer.optimizeImage(UPLOADED_FOLDER, file, 0.3f, 100, 100);
             } catch (Exception e) {
@@ -125,9 +129,9 @@ public class CarController {
     }
 
     @PostMapping(value = "edit/{id}")
-    public String edit(@Valid Car car, BindingResult result, Model model, @PathVariable("id") Long id,@RequestParam("file") MultipartFile file) {
+    public String edit(@Valid Car car, BindingResult result, Model model, @PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
         if (result.hasErrors()) {
-            model.addAttribute("rejectMsg","Somthing is wrong");
+            model.addAttribute("rejectMsg", "Somthing is wrong");
             model.addAttribute("categorylist", categoryRepo.findAll());
             model.addAttribute("agencylist", agencyRepo.findAll());
             return "cars/edit";
@@ -152,12 +156,12 @@ public class CarController {
                 car.setFilePath("/ourcars/" + "new-" + file.getOriginalFilename());
                 car.setFileExtension(file.getContentType());
                 //////////////////////For Image Upload end/////////////////////
-            car.setId(id);
-            this.carRepo.save(car);
-            model.addAttribute("car",new Car());
-            model.addAttribute("successMsg", "Successfully Saved!");
-            model.addAttribute("categorylist", categoryRepo.findAll());
-            model.addAttribute("agencylist", agencyRepo.findAll());
+                car.setId(id);
+                this.carRepo.save(car);
+                model.addAttribute("car", new Car());
+                model.addAttribute("successMsg", "Successfully Saved!");
+                model.addAttribute("categorylist", categoryRepo.findAll());
+                model.addAttribute("agencylist", agencyRepo.findAll());
                 imageOptimizer.optimizeImage(UPLOADED_FOLDER, file, 1.0f, 211, 150);
 
             } catch (Exception e) {
@@ -184,7 +188,48 @@ public class CarController {
 
     @GetMapping(value = "cars")
     public String cars(Model model) {
-        model.addAttribute("cars", this.carRepo.findAll());
+
+        List<Car> allCarList = this.carRepo.findAll();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = df.format(new Date());
+        try {
+            Date date = df.parse(strDate);
+            //Booked Car List
+            List<Booking> bookedCarList = this.bookingRepo.findAllByReturnDateGreaterThanEqual(date);
+
+            List<Car> allBooked = new ArrayList<>();
+
+            for (Booking booking : bookedCarList) {
+                allBooked.add(carRepo.getOne(booking.getCar().iterator().next().getId()));
+            }
+
+            Map<Long, Car> map = new HashMap<Long, Car>();
+
+            carloop:
+            for (Car car : allCarList) {
+                innserloop:
+                for (Car bookCar : allBooked) {
+                    if (car.getId() == bookCar.getId()) {
+                        continue carloop;
+                    } else if (!(car.getId() == bookCar.getId())) {
+                        continue innserloop;
+                    }
+                }
+                map.put(car.getId(), carRepo.getOne(car.getId()));
+
+            }
+
+            List<Car> availaleAllBooked = new ArrayList<>();
+            for (Map.Entry m : map.entrySet()) {
+                availaleAllBooked.add(this.carRepo.getOne(Long.parseLong(m.getKey().toString())));
+            }
+
+            model.addAttribute("cars", availaleAllBooked);
+            model.addAttribute("alreadyBookedcars", allBooked);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return "cars/carsphoto";
     }
 
@@ -239,7 +284,7 @@ public class CarController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String fileName="src\\\\main\\\\resources\\\\report.pdf";
+        String fileName = "src\\\\main\\\\resources\\\\report.pdf";
         MediaType mediaType = MediaUtils.getMediaTypeForFileName(this.context, fileName);
 
         File file = new File(fileName);

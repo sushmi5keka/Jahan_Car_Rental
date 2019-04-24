@@ -27,6 +27,7 @@ public class Booking {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date returnDate;
 
+
     private int noOfDays;
 
     private double farePerDay;
@@ -42,6 +43,8 @@ public class Booking {
     private String fileName;
     private String filePath;
     private String fileExtension;
+
+    private Boolean bookStatus;
 
     @ManyToOne
     @JoinColumn(name = "customer_id",nullable = false)
@@ -59,7 +62,7 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(String customerName, String customerMobile, String customerEmail, Date bookingdate, Date returnDate, int noOfDays, double farePerDay, double totalFareAmount, double advanceFareAmount, double dueFareAmount, Set<Car> car) {
+    public Booking(String customerName, String customerMobile, String customerEmail, Date bookingdate, Date returnDate, int noOfDays, double farePerDay, double totalFareAmount, double advanceFareAmount, double dueFareAmount,Boolean bookStatus, Set<Car> car) {
         this.customerName = customerName;
         this.customerMobile = customerMobile;
         this.customerEmail = customerEmail;
@@ -70,6 +73,7 @@ public class Booking {
         this.totalFareAmount = totalFareAmount;
         this.advanceFareAmount = advanceFareAmount;
         this.dueFareAmount = dueFareAmount;
+        this.bookStatus = bookStatus;
         this.car = car;
         this.customer = customer;
     }
@@ -91,7 +95,10 @@ public class Booking {
         this.fileName = booking.fileName;
         this.filePath = booking.filePath;
         this.fileExtension = booking.fileExtension;
+        this.bookStatus = booking.bookStatus;
     }
+
+
 
     public Long getId() {
         return id;
@@ -221,6 +228,14 @@ public class Booking {
         this.fileExtension = fileExtension;
     }
 
+    public Boolean getBookStatus() {
+        return bookStatus;
+    }
+
+    public void setBookStatus(Boolean bookStatus) {
+        this.bookStatus = bookStatus;
+    }
+
     public Set<Car> getCar() {
         return car;
     }
@@ -249,12 +264,13 @@ public class Booking {
                 Objects.equals(fileName, booking.fileName) &&
                 Objects.equals(filePath, booking.filePath) &&
                 Objects.equals(fileExtension, booking.fileExtension) &&
+                Objects.equals(bookStatus, booking.bookStatus) &&
                 Objects.equals(customer,booking.customer) &&
                 Objects.equals(car, booking.car);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customerName, customerMobile, customerEmail, bookingdate, returnDate, noOfDays, farePerDay, totalFareAmount, advanceFareAmount, dueFareAmount,fileSize, fileName, filePath, fileExtension,customer, car);
+        return Objects.hash(id, customerName, customerMobile, customerEmail, bookingdate, returnDate, noOfDays, farePerDay, totalFareAmount, advanceFareAmount, dueFareAmount,fileSize, fileName, filePath, fileExtension,bookStatus,customer, car);
     }
 }

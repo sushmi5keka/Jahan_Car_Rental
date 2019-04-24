@@ -46,6 +46,9 @@ public class Car {
 
     public Car() {
     }
+    public Car(Long id) {
+        this.id=id;
+    }
 
     public Car(int carNumber, String carModel, String color, String noOfSeats, Date dateOfManufacture, double farePerDay, Agency agency) {
         this.carNumber = carNumber;
