@@ -1,0 +1,390 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.6.40-log
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema jahancarrental
+--
+
+CREATE DATABASE IF NOT EXISTS jahancarrental;
+USE jahancarrental;
+
+--
+-- Definition of table `address`
+--
+
+DROP TABLE IF EXISTS `address`;
+CREATE TABLE `address` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `city` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `district` varchar(255) DEFAULT NULL,
+  `division` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `address`
+--
+
+/*!40000 ALTER TABLE `address` DISABLE KEYS */;
+INSERT INTO `address` (`id`,`city`,`country`,`district`,`division`,`location`) VALUES 
+ (1,'Dhaka','Bangladesh','Dhaka','Dhaka','Dhanmondi'),
+ (2,'Dhaka','Bangladesh','Dhaka','Dhaka','Mirpur'),
+ (3,'Dhaka','Bangladesh','Dhaka','Dhaka','Gulshan'),
+ (4,'Dhaka','Bangladesh','Dhaka','Dhaka','Hatir Jhil'),
+ (5,'Dhaka','Bangladesh','Dhaka','Dhaka','Elephant Road'),
+ (6,'Dhaka','Bangladesh','Dhaka','Dhaka','Azimpur');
+/*!40000 ALTER TABLE `address` ENABLE KEYS */;
+
+
+--
+-- Definition of table `agency`
+--
+
+DROP TABLE IF EXISTS `agency`;
+CREATE TABLE `agency` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `ownername` varchar(255) DEFAULT NULL,
+  `address_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKiqovy0gm1lebgwor5g2kdfcmk` (`address_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `agency`
+--
+
+/*!40000 ALTER TABLE `agency` DISABLE KEYS */;
+INSERT INTO `agency` (`id`,`email`,`mobile`,`name`,`ownername`,`address_id`) VALUES 
+ (1,'rakin@gmail.com','01300000000','Jahan Car Rental,Dhanmondi','Md. Rakinuzzaman Taj',1),
+ (2,'toma@gmail.com','01200000000','Jahan Car Rental,Mirpur','Mrs. Toma Mamun',2),
+ (3,'hamim@gmail.com','01900000000','Jahan Car Rental,Gulshan','Md. Hamim Rahman',3),
+ (4,'kongkon@gmail.com','01500000000','Jahan Car Rental,Hatir Jhil','Mrs. Kongkon Khan',4),
+ (5,'nupur@gmail.com','01700000000','Jahan Car Rental,Elephant Road','Yesmin Nupur',5),
+ (6,'sushmi@gmail.com','01800000000','Jahan Car Rental,Azimpur','Sushmi Keka',6);
+/*!40000 ALTER TABLE `agency` ENABLE KEYS */;
+
+
+--
+-- Definition of table `booking`
+--
+
+DROP TABLE IF EXISTS `booking`;
+CREATE TABLE `booking` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `advance_fare_amount` double NOT NULL,
+  `book_status` bit(1) DEFAULT NULL,
+  `bookingdate` date DEFAULT NULL,
+  `customer_email` varchar(255) DEFAULT NULL,
+  `customer_mobile` varchar(255) DEFAULT NULL,
+  `customer_name` varchar(255) DEFAULT NULL,
+  `due_fare_amount` double NOT NULL,
+  `fare_per_day` double NOT NULL,
+  `file_extension` varchar(255) DEFAULT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
+  `file_path` varchar(255) DEFAULT NULL,
+  `file_size` bigint(20) DEFAULT NULL,
+  `no_of_days` int(11) NOT NULL,
+  `return_date` date DEFAULT NULL,
+  `total_fare_amount` double NOT NULL,
+  `customer_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKtpm65yup17nf5o2fn0ll9be93` (`customer_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `booking`
+--
+
+/*!40000 ALTER TABLE `booking` DISABLE KEYS */;
+INSERT INTO `booking` (`id`,`advance_fare_amount`,`book_status`,`bookingdate`,`customer_email`,`customer_mobile`,`customer_name`,`due_fare_amount`,`fare_per_day`,`file_extension`,`file_name`,`file_path`,`file_size`,`no_of_days`,`return_date`,`total_fare_amount`,`customer_id`) VALUES 
+ (1,2000,NULL,'2019-06-26','jubayir@gmail.com','01800000000','Jubayir Hossain',5000,3500,'image/jpeg','new-car-3a.jpg','/ourcars/new-car-3a.jpg',38689,2,'2019-06-27',7000,4),
+ (2,3000,NULL,'2019-06-26','moly@gmail.com','01700000000','Nurnahar Moly',15000,6000,'image/jpeg','new-c-14a.jpg','/ourcars/new-c-14a.jpg',38366,3,'2019-06-28',18000,3);
+/*!40000 ALTER TABLE `booking` ENABLE KEYS */;
+
+
+--
+-- Definition of table `booking_car`
+--
+
+DROP TABLE IF EXISTS `booking_car`;
+CREATE TABLE `booking_car` (
+  `booking_id` bigint(20) NOT NULL,
+  `car_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`booking_id`,`car_id`),
+  KEY `FKftkgdkifckwk1ew12ap7t88ek` (`car_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `booking_car`
+--
+
+/*!40000 ALTER TABLE `booking_car` DISABLE KEYS */;
+INSERT INTO `booking_car` (`booking_id`,`car_id`) VALUES 
+ (1,1),
+ (2,5);
+/*!40000 ALTER TABLE `booking_car` ENABLE KEYS */;
+
+
+--
+-- Definition of table `booking_summary`
+--
+
+DROP TABLE IF EXISTS `booking_summary`;
+CREATE TABLE `booking_summary` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `advance_fare_amount` double NOT NULL,
+  `collected_amount` double NOT NULL,
+  `due_fare_amount` double NOT NULL,
+  `total_fare_amount` double NOT NULL,
+  `booking_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKf4s2yapxg5lpdxdvsi9lh1c41` (`booking_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `booking_summary`
+--
+
+/*!40000 ALTER TABLE `booking_summary` DISABLE KEYS */;
+INSERT INTO `booking_summary` (`id`,`advance_fare_amount`,`collected_amount`,`due_fare_amount`,`total_fare_amount`,`booking_id`) VALUES 
+ (1,3000,15000,15000,18000,5),
+ (2,2000,5000,5000,7000,1),
+ (3,3000,15000,15000,18000,5);
+/*!40000 ALTER TABLE `booking_summary` ENABLE KEYS */;
+
+
+--
+-- Definition of table `car`
+--
+
+DROP TABLE IF EXISTS `car`;
+CREATE TABLE `car` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `car_model` varchar(255) DEFAULT NULL,
+  `car_number` int(11) NOT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  `date_of_manufacture` date DEFAULT NULL,
+  `fare_per_day` double NOT NULL,
+  `file_extension` varchar(255) DEFAULT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
+  `file_path` varchar(255) DEFAULT NULL,
+  `file_size` bigint(20) DEFAULT NULL,
+  `no_of_seats` varchar(255) DEFAULT NULL,
+  `agency_id` bigint(20) NOT NULL,
+  `category_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK26raqytna8ar7o75q54l67nd8` (`agency_id`),
+  KEY `FK377w213doepxacos5ptnph70e` (`category_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `car`
+--
+
+/*!40000 ALTER TABLE `car` DISABLE KEYS */;
+INSERT INTO `car` (`id`,`car_model`,`car_number`,`color`,`date_of_manufacture`,`fare_per_day`,`file_extension`,`file_name`,`file_path`,`file_size`,`no_of_seats`,`agency_id`,`category_id`) VALUES 
+ (1,'A-05',1234,'Blue','2019-06-01',3500,'image/jpeg','new-car-3a.jpg','/ourcars/new-car-3a.jpg',38689,'5',1,1),
+ (2,'B-05',2345,'Red','2019-06-02',3500,'image/jpeg','new-car-4a.jpg','/ourcars/new-car-4a.jpg',39633,'5',2,2),
+ (3,'C-05',3456,'Black','2019-06-03',3000,'image/jpeg','new-car-5a.jpg','/ourcars/new-car-5a.jpg',45176,'4',3,3),
+ (4,'D-05',4567,'White','2019-06-04',3000,'image/jpeg','new-car-6 a.jpg','/ourcars/new-car-6 a.jpg',28202,'4',4,4),
+ (5,'E-05',5678,'Marun','2019-06-01',6000,'image/jpeg','new-c-14a.jpg','/ourcars/new-c-14a.jpg',38366,'7',5,5),
+ (6,'F-05',6789,'Silver','2019-06-02',5500,'image/jpeg','new-c-9a.jpg','/ourcars/new-c-9a.jpg',41115,'6',6,5);
+/*!40000 ALTER TABLE `car` ENABLE KEYS */;
+
+
+--
+-- Definition of table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `category`
+--
+
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` (`id`,`name`) VALUES 
+ (1,'Seden'),
+ (2,'MPV'),
+ (3,'SUV'),
+ (4,'Crossover'),
+ (5,'Coupe');
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+
+
+--
+-- Definition of table `contact_us`
+--
+
+DROP TABLE IF EXISTS `contact_us`;
+CREATE TABLE `contact_us` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `message` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `contact_us`
+--
+
+/*!40000 ALTER TABLE `contact_us` DISABLE KEYS */;
+INSERT INTO `contact_us` (`id`,`message`) VALUES 
+ (1,'hello,Do you have any Branch out of Dhaka ??');
+/*!40000 ALTER TABLE `contact_us` ENABLE KEYS */;
+
+
+--
+-- Definition of table `customer_summary`
+--
+
+DROP TABLE IF EXISTS `customer_summary`;
+CREATE TABLE `customer_summary` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `advance_fare_amount` double NOT NULL,
+  `due_fare_amount` double NOT NULL,
+  `first_booking_date` date NOT NULL,
+  `last_booking_date` date DEFAULT NULL,
+  `no_of_booking` int(11) NOT NULL,
+  `total_fare_amount` double NOT NULL,
+  `customer_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK425gy2voanwhp7vhbrwhj5o6a` (`customer_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer_summary`
+--
+
+/*!40000 ALTER TABLE `customer_summary` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customer_summary` ENABLE KEYS */;
+
+
+--
+-- Definition of table `role`
+--
+
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `role`
+--
+
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` (`id`,`role_name`) VALUES 
+ (1,'ADMIN'),
+ (2,'SUPERADMIN'),
+ (3,'USER');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `address` varchar(255) DEFAULT NULL,
+  `birth_date` date NOT NULL,
+  `confirmation_token` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `enabled` bit(1) NOT NULL,
+  `file_extension` varchar(255) DEFAULT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
+  `file_path` varchar(255) DEFAULT NULL,
+  `file_size` bigint(20) DEFAULT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `last_modified_date` datetime DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `regi_date` datetime DEFAULT NULL,
+  `token_expired` bit(1) NOT NULL,
+  `user_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`),
+  UNIQUE KEY `UK_lqjrcobrh9jc8wpcar64q1bfh` (`user_name`),
+  UNIQUE KEY `UK_cnjwxx5favk5ycqajjt17fwy1` (`mobile`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`id`,`address`,`birth_date`,`confirmation_token`,`email`,`enabled`,`file_extension`,`file_name`,`file_path`,`file_size`,`first_name`,`gender`,`last_modified_date`,`last_name`,`mobile`,`password`,`regi_date`,`token_expired`,`user_name`) VALUES 
+ (1,'37/2/B Gonoktuli,Jalalmonjil,Dhaka','2012-11-05','9f789126-a347-4922-8a0e-424d3823cc84','sushmi@gmail.com',0x01,'image/jpeg','new-sk.jpg','/images/new-sk.jpg',56697,'Sushmi',NULL,'2019-06-25 23:16:26','Keka','01500000000','$2a$10$ruJHppWWKjCdfSxlHubwxuNd.0nzAMoH7rZmAqanfRZ/Dmp4tVS5e',NULL,0x00,'sushmi'),
+ (2,'135/A Elephant Road,Prince Tower,Dhaka','2011-09-05','a75f7e2c-76b3-4c00-84a0-e5ca047da723','israt05jahan@gmail.com',0x01,'image/jpeg','new-pp2.jpg','/images/new-pp2.jpg',82392,'Israt','female','2019-06-25 22:35:28','Jahan','01900000000','$2a$10$5DqMQaIsYRNkjBqqeA6vVO17gYD60nilTzq7xpE7MaBfbJg3BpthW','2019-06-25 22:25:47',0x00,'israt05jahan'),
+ (3,'Mohammodpur','2011-09-07','72abd017-3927-4f1b-9e6c-ce01d75253f5','moly@gmail.com',0x01,'image/jpeg','new-moly.jpg','/images/new-moly.jpg',115767,'NurNahar','female','2019-06-26 00:11:32','Moly','01700000000','$2a$10$adlayb6SoSObgiCv.hcqBuvr5r4jyuFBimHVVjcO6cgNcsE/OPdRK',NULL,0x00,'moly'),
+ (4,'Elephant Road','2010-02-04','579921a0-de1d-4cf7-ac0d-fb58dc14066c','jubayir@gmail.com',0x01,'image/jpeg','new-jubayirr.jpg','/images/new-jubayirr.jpg',20663,'Jubayir','male','2019-06-26 00:11:51','Hossain','01800000000','$2a$10$VzYpGeUjrFnyPhL7d4qY1Ou0abV4GhBA./NSVnRgB2lmkURSKBXqq',NULL,0x00,'jubayir'),
+ (5,'Mohammodpur','2010-03-12','7601e927-6f02-4dcd-9855-f2c2d8a0284b','mehedee@gmail.com',0x01,'image/jpeg','new-mehedeee.jpg','/images/new-mehedeee.jpg',26913,'Mehedee','male','2019-06-26 00:12:01','Hasan','01300000000','$2a$10$cRkFVJe94181G8WFfmdhdeR/3sVpssY2Ws4/2GoOoELIkNnBNkOw2',NULL,0x00,'mehedee'),
+ (6,'Jigatola','2012-11-28','55e4e9b8-2e1b-4227-9dd5-a1df4743be27','arefin@gmail.com',0x01,'image/jpeg','new-arifin.jpg','/images/new-arifin.jpg',12774,'Shafayat','male','2019-06-26 00:12:11','Arefin','01200000000','$2a$10$8GJL1Lk716QyizPFUkVYDeoCGHMUUuCQd5bFfCK3zvM6xzJQDE4hG',NULL,0x00,'arefin');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_role`
+--
+
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `user_id` bigint(20) NOT NULL,
+  `role_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `FKa68196081fvovjhkek5m97n3y` (`role_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_role`
+--
+
+/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
+INSERT INTO `user_role` (`user_id`,`role_id`) VALUES 
+ (1,1),
+ (1,2),
+ (2,1),
+ (3,3),
+ (4,3),
+ (5,3),
+ (6,3);
+/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
